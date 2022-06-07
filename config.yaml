@@ -1,0 +1,40 @@
+settings:
+  title: "Status Page"
+  url: "https://status.jh0project.com" # used for Slack messages
+  logo: logo-192x192.png # image in ./public/ folder
+  daysInHistogram: 90 # number of days you want to display in histogram
+  collectResponseTimes: true # collects avg response times from CRON locations
+
+  allmonitorsOperational: "All Systems Operational"
+  notAllmonitorsOperational: "Not All Systems Operational"
+  monitorLabelOperational: "Operational"
+  monitorLabelNotOperational: "Not Operational"
+  monitorLabelNoData: "No data"
+  dayInHistogramNoData: "No data"
+  dayInHistogramOperational: "All good"
+  dayInHistogramNotOperational: " incident(s)" # xx incident(s) recorded
+
+monitors:
+  - id: main # unique identifier
+    name: JH0project Main Website
+    description: "" # default=empty
+    url: "https://www.jh0project.com" # URL to fetch
+    method: GET # default=GET
+    expectStatus: 200 # operational status, default=200
+    followRedirect: false # should fetch follow redirects, default=false
+
+  - id: dn42 # unique identifier
+    name: JH0project DN42 Website
+    description: "" # default=empty
+    url: "https://dn42.jh0project.com" # URL to fetch
+    method: GET # default=GET
+    expectStatus: 200 # operational status, default=200
+    followRedirect: false # should fetch follow redirects, default=false
+
+  - id: css-discord-bot # unique identifier
+    name: CSS Discord Bot
+    description: "" # default=empty
+    url: "https://www.jh0project.com/cssdiscord/google.html" # URL to fetch
+    method: GET # default=GET
+    expectStatus: 200 # operational status, default=200
+    followRedirect: false # should fetch follow redirects, default=false
