@@ -19,6 +19,7 @@ Also, prepare the following secrets
 
 - Cloudflare API token with `Edit Cloudflare Workers` permissions
 - Slack incoming webhook \(optional\)
+- Discord incoming webhook \(optional\)
 
 ## Getting started
 
@@ -38,6 +39,9 @@ You can either deploy with **Cloudflare Deploy Button** using GitHub Actions or 
 
    - Name: SECRET_SLACK_WEBHOOK_URL (optional)
    - Value: your-slack-webhook-url
+
+   - Name: SECRET_DISCORD_WEBHOOK_URL (optional)
+   - Value: your-discord-webhook-url
    ```
 
 3. Navigate to the **Actions** settings in your repository and enable them
@@ -46,7 +50,7 @@ You can either deploy with **Cloudflare Deploy Button** using GitHub Actions or 
    ```yaml
    settings:
      title: 'Status Page'
-     url: 'https://status-page.eidam.dev' # used for Slack messages
+     url: 'https://status-page.eidam.dev' # used for Slack & Discord messages
      logo: logo-192x192.png # image in ./public/ folder
      daysInHistogram: 90 # number of days you want to display in histogram
      collectResponseTimes: false # experimental feature, enable only for <5 monitors or on paid plans
@@ -70,6 +74,7 @@ You can either deploy with **Cloudflare Deploy Button** using GitHub Actions or 
        method: GET # default=GET
        expectStatus: 200 # operational status, default=200
        followRedirect: false # should fetch follow redirects, default=false
+       linkable: false # should the titles be links to the service, default=true
    ```
 
 5. Push to `main` branch to trigger the deployment
@@ -96,6 +101,7 @@ You can clone the repository yourself and use Wrangler CLI to develop/deploy, ex
 - create KV namespace and add the `KV_STATUS_PAGE` binding to [wrangler.toml](./wrangler.toml)
 - create Worker secrets _\(optional\)_
   - `SECRET_SLACK_WEBHOOK_URL`
+  - `SECRET_DISCORD_WEBHOOK_URL`
 
 ## Workers KV free tier
 
@@ -115,6 +121,50 @@ The Workers Free plan includes limited KV usage, but the quota is sufficient for
 
 ## Future plans
 
-Stay tuned for more features coming in, like leveraging the fact that CRON instances are scheduled around the world during the day
-so we can monitor the response times. However, we will most probably wait for the [Durable Objects](https://blog.cloudflare.com/introducing-workers-durable-objects/) to be in open beta
-as they are better fit to reliably store such info.
+WIP - Support for Durable Objects - Cloudflare's product for low-latency coordination and consistent storage for the Workers platform. There is a working prototype, however, we are waiting for at least open beta.
+
+There is also a managed version of this project, currently in beta. Feel free to check it out https://statusflare.com (https://twitter.com/statusflare_com).
+
+## Running project locally
+**Requirements**
+- Linux or WSL
+- Yarn (`npm i -g yarn`)
+- Node 14+
+
+### Steps to get server up and running
+**Install wrangler**
+```
+npm i -g wrangler
+```
+
+**Login With Wrangler to Cloudflare**
+```
+wrangler login
+```
+
+**Create your KV namespace in cloudflare**
+```
+On the workers page navigate to KV, and create a namespace
+```
+
+**Update your wrangler.toml with**
+```
+kv-namespaces = [{binding="KV_STATUS_PAGE", id="<KV_ID>", preview_id="<KV_ID>"}]
+```
+_Note: you may need to change `kv-namespaces` to `kv_namespaces`_
+
+**Install packages**
+```
+yarn install
+```
+
+**Create CSS**
+```
+yarn run css
+```
+
+**Run**
+```
+yarn run dev
+```
+_Note: If the styles do not come through try using `localhost:8787` instead of `localhost:8080`_
