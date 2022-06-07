@@ -14,7 +14,6 @@ settings:
   dayInHistogramOperational: "All good"
   dayInHistogramNotOperational: " incident(s)" # xx incident(s) recorded
 
-
 monitors:
   - id: main # unique identifier
     name: JH0project Main Website
