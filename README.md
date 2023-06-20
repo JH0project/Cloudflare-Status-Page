@@ -45,7 +45,7 @@ You can either deploy with **Cloudflare Deploy Button** using GitHub Actions or 
    ```
 
 3. Navigate to the **Actions** settings in your repository and enable them
-4. Edit [config.yaml](./config.yaml) to adjust configuration and list all of your websites/APIs you want to monitor
+4. Edit [config.json](./config.json) to adjust configuration and list all of your websites/APIs you want to monitor
 
    ```yaml
    settings:

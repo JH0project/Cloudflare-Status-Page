@@ -1,4 +1,4 @@
-import config from '../../config.yaml'
+import config from '../../config.json'
 import { useEffect, useState } from 'react'
 
 const kvDataKey = 'monitors_data_v1_1'
@@ -34,9 +34,8 @@ export async function notifySlack(monitor, operational) {
             type: 'section',
             text: {
               type: 'mrkdwn',
-              text: `Monitor *${
-                monitor.name
-              }* changed status to *${getOperationalLabel(operational)}*`,
+              text: `Monitor *${monitor.name
+                }* changed status to *${getOperationalLabel(operational)}*`,
             },
           },
           {
@@ -44,11 +43,9 @@ export async function notifySlack(monitor, operational) {
             elements: [
               {
                 type: 'mrkdwn',
-                text: `${operational ? ':white_check_mark:' : ':x:'} \`${
-                  monitor.method ? monitor.method : 'GET'
-                } ${monitor.url}\` - :eyes: <${
-                  config.settings.url
-                }|Status Page>`,
+                text: `${operational ? ':white_check_mark:' : ':x:'} \`${monitor.method ? monitor.method : 'GET'
+                  } ${monitor.url}\` - :eyes: <${config.settings.url
+                  }|Status Page>`,
               },
             ],
           },
@@ -68,9 +65,8 @@ export async function notifyTelegram(monitor, operational) {
     '-',
     '\\-',
   )}* changed status to *${getOperationalLabel(operational)}*
-  ${operational ? '✅' : '❌'} \`${monitor.method ? monitor.method : 'GET'} ${
-    monitor.url
-  }\` \\- 👀 [Status Page](${config.settings.url})`
+  ${operational ? '✅' : '❌'} \`${monitor.method ? monitor.method : 'GET'} ${monitor.url
+    }\` \\- 👀 [Status Page](${config.settings.url})`
 
   const payload = new FormData()
   payload.append('chat_id', SECRET_TELEGRAM_CHAT_ID)
@@ -91,12 +87,10 @@ export async function notifyDiscord(monitor, operational) {
     avatar_url: `${config.settings.url}/${config.settings.logo}`,
     embeds: [
       {
-        title: `${monitor.name} is ${getOperationalLabel(operational)} ${
-          operational ? ':white_check_mark:' : ':x:'
-        }`,
-        description: `\`${monitor.method ? monitor.method : 'GET'} ${
-          monitor.url
-        }\` - :eyes: [Status Page](${config.settings.url})`,
+        title: `${monitor.name} is ${getOperationalLabel(operational)} ${operational ? ':white_check_mark:' : ':x:'
+          }`,
+        description: `\`${monitor.method ? monitor.method : 'GET'} ${monitor.url
+          }\` - :eyes: [Status Page](${config.settings.url})`,
         color: operational ? 3581519 : 13632027,
       },
     ],

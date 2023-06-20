@@ -1,4 +1,4 @@
-import config from '../../config.yaml'
+import config from '../../config.json'
 
 const classes = {
   gray: 'bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200',

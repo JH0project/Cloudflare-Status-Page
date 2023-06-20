@@ -50,7 +50,7 @@ async function saveKVMonitors(kvMonitorsKey, data) {
 }
 
 function loadConfig() {
-  const configFile = fs.readFileSync('./config.yaml', 'utf8')
+  const configFile = fs.readFileSync('./config.json', 'utf8')
   const config = yaml(configFile)
   return JSON.parse(config)
 }
