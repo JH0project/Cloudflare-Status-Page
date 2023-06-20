@@ -20,7 +20,7 @@ export async function processCronTrigger(event) {
 
   // Get monitors state from KV
   let monitorsState = await getKVMonitors()
-
+  console.log(monitorsState)
   // Create empty state objects if not exists in KV storage yet
   if (!monitorsState) {
     monitorsState = { lastUpdate: {}, monitors: {} }
