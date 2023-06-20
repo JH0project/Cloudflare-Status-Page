@@ -1,4 +1,3 @@
-const fetch = require('node-fetch')
 const fs = require('fs')
 
 const accountId = process.env.CF_ACCOUNT_ID

@@ -12,12 +12,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 12
-      - run: yarn install
-        env:
-          NODE_ENV: production
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
