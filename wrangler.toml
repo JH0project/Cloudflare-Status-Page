@@ -1,7 +1,7 @@
 name = "cf-workers-status-page"
 workers_dev = true
 compatibility_date = "2021-07-23"
-main = "./dist/worker.js"
+main = "./index.js"
 
 [triggers]
 crons = ["*/2 * * * *"]
