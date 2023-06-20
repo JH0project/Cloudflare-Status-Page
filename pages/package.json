@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.1.0",
+    "@cloudflare/workers-types": "^4.20230518.0",
     "vercel": "^30.2.3"
   }
 }
