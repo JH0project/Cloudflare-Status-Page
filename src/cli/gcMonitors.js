@@ -1,4 +1,3 @@
-const yaml = require('yaml-loader')
 const fetch = require('node-fetch')
 const fs = require('fs')
 
@@ -51,7 +50,7 @@ async function saveKVMonitors(kvMonitorsKey, data) {
 
 function loadConfig() {
   const configFile = fs.readFileSync('./config.json', 'utf8')
-  const config = yaml(configFile)
+  const config = JSON.parse(configFile);
   return JSON.parse(config)
 }
 
