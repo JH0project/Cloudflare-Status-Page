@@ -1,5 +1,4 @@
 import config from '../../config.json'
-import { useEffect, useState } from 'react'
 
 const kvDataKey = 'monitors_data_v1_1'
 
@@ -100,34 +99,6 @@ export async function notifyDiscord(monitor, operational) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   })
-}
-
-export function useKeyPress(targetKey) {
-  const [keyPressed, setKeyPressed] = useState(false)
-
-  function downHandler({ key }) {
-    if (key === targetKey) {
-      setKeyPressed(true)
-    }
-  }
-
-  const upHandler = ({ key }) => {
-    if (key === targetKey) {
-      setKeyPressed(false)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener('keydown', downHandler)
-    window.addEventListener('keyup', upHandler)
-
-    return () => {
-      window.removeEventListener('keydown', downHandler)
-      window.removeEventListener('keyup', upHandler)
-    }
-  }, [])
-
-  return keyPressed
 }
 
 export async function getCheckLocation() {
