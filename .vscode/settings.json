@@ -1,0 +1,5 @@
+{
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///mnt/c/Users/Heihe/Downloads/cf-workers-status-page/.github/workflows/deploy.yml"
+  }
+}
