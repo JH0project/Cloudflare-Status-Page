@@ -46,7 +46,7 @@ export async function processCronTrigger(event) {
       method: monitor.method || 'GET',
       redirect: monitor.followRedirect ? 'follow' : 'manual',
       headers: {
-        'User-Agent': config.settings.user_agent || 'cf-worker-status-page',
+        'User-Agent': config.settings.user_agent || 'cf-workers-status-poller',
       },
     }
 

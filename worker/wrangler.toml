@@ -1,4 +1,4 @@
-name = "cf-workers-status-page"
+name = "cf-workers-status-poller"
 workers_dev = true
 compatibility_date = "2021-07-23"
 main = "./worker/index.js"
