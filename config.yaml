@@ -30,11 +30,3 @@ monitors:
     method: GET # default=GET
     expectStatus: 200 # operational status, default=200
     followRedirect: false # should fetch follow redirects, default=false
-
-  - id: css-discord-bot # unique identifier
-    name: CSS Discord Bot
-    description: "" # default=empty
-    url: "https://www.jh0project.com/cssdiscord/google.html" # URL to fetch
-    method: GET # default=GET
-    expectStatus: 200 # operational status, default=200
-    followRedirect: false # should fetch follow redirects, default=false
