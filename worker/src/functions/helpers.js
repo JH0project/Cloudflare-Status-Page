@@ -2,8 +2,6 @@ import config from '../../config.json'
 
 const kvDataKey = 'monitors_data_v1_1'
 
-import LZString from 'lz-string'
-
 export async function getKVMonitors() {
   // trying both to see performance difference
   return LZString.decompress(KV_STATUS_PAGE.get(kvDataKey, 'json'))
