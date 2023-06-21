@@ -2,14 +2,16 @@ import config from '../../config.json'
 
 const kvDataKey = 'monitors_data_v1_1'
 
+import LZString from 'lz-string'
+
 export async function getKVMonitors() {
   // trying both to see performance difference
-  return KV_STATUS_PAGE.get(kvDataKey, 'json')
+  return LZString.decompress(KV_STATUS_PAGE.get(kvDataKey, 'json'))
   //return JSON.parse(await KV_STATUS_PAGE.get(kvDataKey, 'text'))
 }
 
 export async function setKVMonitors(data) {
-  return setKV(kvDataKey, JSON.stringify(data))
+  return setKV(kvDataKey, LZString.compress(JSON.stringify(data)))
 }
 
 const getOperationalLabel = (operational) => {
