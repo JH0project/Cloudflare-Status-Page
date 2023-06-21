@@ -23,9 +23,6 @@ export async function processCronTrigger(event) {
     monitorsState = {}
   }
 
-  // Reset default all monitors state to true
-  monitorsState.lastUpdate.allOperational = true
-
   for (const monitor of config.monitors) {
 
     console.log(`Checking ${monitor.name} ...`)
