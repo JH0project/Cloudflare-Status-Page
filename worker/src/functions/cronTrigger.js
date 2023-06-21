@@ -76,7 +76,7 @@ export async function processCronTrigger(event) {
     if (config.settings.collectResponseTimes && monitorOperational) {
       // make sure location exists in current checkDay
       if (
-        !monitorsState[monitor.id].checks[checkDay].res.hasOwnProperty(
+        !monitorsState[monitor.id].checks[checkDay].summery.hasOwnProperty(
           checkLocation,
         )
       ) {
