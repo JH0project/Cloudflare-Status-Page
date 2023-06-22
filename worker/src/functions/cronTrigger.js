@@ -47,9 +47,9 @@ export async function processCronTrigger(event) {
     }
 
     // Perform a check and measure time
-    const requestStartTime = Date.now()
+    const requestStartTime = performance.now()
     const checkResponse = await fetch(monitor.url, init)
-    const requestTime = Math.round(Date.now() - requestStartTime)
+    const requestTime = Math.round(performance.now() - requestStartTime)
 
     // Determine whether operational and status changed
     const monitorOperational = checkResponse.status === (monitor.expectStatus || 200)
