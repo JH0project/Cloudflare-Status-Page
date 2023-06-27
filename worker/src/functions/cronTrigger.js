@@ -66,7 +66,7 @@ export async function processCronTrigger(event) {
         res: [],
       }
       if (!monitorsState[monitor.id].operational) {
-        monitorsState[monitor.id].checks[checkDay].incidents.push(monitorsState[monitor.id].incidents.at(-1))
+        monitorsState[monitor.id].checks[checkDay].incidents.push(monitorsState[monitor.id].incidents.length - 1)
       }
     }
 
@@ -110,7 +110,7 @@ export async function processCronTrigger(event) {
 
       // back online
       if (monitorStatusChanged) {
-        monitorsState[monitor.id][monitorsState[monitor.id].incidents.at(-1)].end = now;
+        monitorsState[monitor.id].incidents.at(-1) = now;
       }
     }
 
