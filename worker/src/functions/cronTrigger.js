@@ -110,7 +110,7 @@ export async function processCronTrigger(event) {
 
       // back online
       if (monitorStatusChanged) {
-        monitorsState[monitor.id][monitorsState[monitor.id].lastIncident].end = now;
+        monitorsState[monitor.id][monitorsState[monitor.id].incidents.at(-1)].end = now;
       }
     }
 
