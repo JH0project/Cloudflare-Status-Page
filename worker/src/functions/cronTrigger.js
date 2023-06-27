@@ -66,7 +66,7 @@ export async function processCronTrigger(event) {
         res: [],
       }
       if (!monitorsState[monitor.id].operational) {
-        monitorsState[monitor.id].checks[checkDay].incidents.push(monitorsState[monitor.id].lastIncident)
+        monitorsState[monitor.id].checks[checkDay].incidents.push(monitorsState[monitor.id].incidents.at(-1))
       }
     }
 
