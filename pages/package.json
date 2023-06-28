@@ -13,6 +13,9 @@
     "pages:dev": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.6",
     "@types/node": "20.3.1",
     "@types/react": "18.2.13",
     "@types/react-dom": "18.2.6",
@@ -21,6 +24,8 @@
     "next": "13.4.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "recharts": "^2.7.1",
+    "server-only": "^0.0.1",
     "typescript": "5.1.3"
   },
   "devDependencies": {
