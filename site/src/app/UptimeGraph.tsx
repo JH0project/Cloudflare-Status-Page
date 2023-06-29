@@ -34,8 +34,8 @@ const getUpPresentage = (kvMonitor: KvMonitor, day: string) => {
 
 export default function UptimeGraph({ kvMonitor, monitorName }: { kvMonitor: KvMonitor, monitorName: string }) {
   const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up('md'))
-  const lastDays = useMediaQuery(theme.breakpoints.up('sm')) ? mdUp ? 90 : 60 : 30
+  const mdUp = useMediaQuery(theme.breakpoints.up('md'), { defaultMatches: true })
+  const lastDays = useMediaQuery(theme.breakpoints.up('sm'), { defaultMatches: true }) ? mdUp ? 90 : 60 : 30
 
   let lastX0Uptime = 0;
   const lastX0Days = new Array(lastDays).fill(1).map((_, i) => {
