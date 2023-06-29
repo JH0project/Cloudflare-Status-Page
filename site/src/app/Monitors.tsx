@@ -21,16 +21,14 @@ export default function Monitors({ kvMonitors }: { kvMonitors: KvMonitors }) {
     return () => clearInterval(interval)
   }, [router])
 
-  const allOperational = Object.keys(kvMonitors).map((monitor) => kvMonitors.monitors[monitor].operational).every((monitor) => monitor === true)
-
   return (
     <Container maxWidth='md' style={{ padding: '0 0 5vh 0' }}>
       <Typography variant='h3' component='h1' style={{ margin: '2.5vh 1vw' }}>
         {config.settings.title}
       </Typography >
-      <Paper elevation={5} style={{ padding: '2.5vh 2vw', margin: '0 0 5vh 0', backgroundColor: allOperational ? '#2ecc71' : '' }}>
+      <Paper elevation={5} style={{ padding: '2.5vh 2vw', margin: '0 0 5vh 0', backgroundColor: kvMonitors.allOperational ? '#2ecc71' : '' }}>
         <Typography variant='h3' component='h1' style={{ color: '#fff', textAlign: 'left' }}>
-          {allOperational ? 'All Systems Operational' : 'Outage'}
+          {kvMonitors.allOperational ? 'All Systems Operational' : 'Outage'}
         </Typography >
         <Typography variant='body1' component='p' style={{ color: '#fff', textAlign: 'right' }}>
           {kvMonitors.lastCheck}
@@ -38,7 +36,7 @@ export default function Monitors({ kvMonitors }: { kvMonitors: KvMonitors }) {
       </Paper>
       <Paper elevation={5} style={{ padding: '5vh 0', margin: '5vh 0' }}>
         <Container>
-          {Object.keys(kvMonitors).map((monitorName, i) => {
+          {Object.keys(kvMonitors.monitors).map((monitorName, i) => {
             const kvMonitor = kvMonitors.monitors[monitorName]
             return (<>
               {i !== 0 && <Divider style={{ margin: '2.5vh 0' }} />}
