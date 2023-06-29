@@ -1,9 +1,9 @@
 {
   "settings": {
-    "title": "Status Page",
+    "title": "JH0project Status",
     "url": "https://status.jh0project.com",
+    "description": "The status page of JH0project, showing historical status and performane information.",
     "logo": "logo-192x192.png",
-    "daysInHistogram": 90,
     "collectResponseTimes": true,
     "allmonitorsOperational": "All Systems Operational",
     "notAllmonitorsOperational": "Not All Systems Operational",
@@ -16,8 +16,8 @@
   },
   "monitors": [
     {
-      "id": "Main Website",
-      "name": "JH0project Main Website",
+      "id": "main",
+      "name": "Main Website",
       "description": "",
       "url": "https://www.jh0project.com",
       "method": "GET",
@@ -25,8 +25,8 @@
       "followRedirect": false
     },
     {
-      "id": "DN42 Website",
-      "name": "JH0project DN42 Website",
+      "id": "dn42",
+      "name": "DN42 Website",
       "description": "",
       "url": "https://dn42.jh0project.com",
       "method": "GET",
