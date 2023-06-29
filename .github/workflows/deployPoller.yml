@@ -6,7 +6,7 @@ on:
             - main
         paths:
             - "poller/**"
-            - ".github/workflows/deploy.yml"
+            - ".github/workflows/deployPoller.yml"
     repository_dispatch:
 
 jobs:
