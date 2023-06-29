@@ -58,12 +58,12 @@ export default function UptimeGraph({ kvMonitor, monitorName }: { kvMonitor: KvM
           <Tooltip title={<div style={{ textAlign: 'center' }}>
             {day}
             <br />
-            {upPresentage !== undefined ? upPresentage * 100 + ' %' : 'No kvMonitor'}
+            {upPresentage !== undefined ? upPresentage * 100 + ' %' : 'No Data'}
             <br />
             <div style={{ width: '10vw', height: '10vh' }}>
               <ResponseGraph data={Object.keys(kvMonitor.checks).map((day) => kvMonitor.checks[day].res).flat()} day={lastDays - i} local={false} />
             </div>
-          </div>} arrow key={i}>
+          </div>} arrow key={i} enterTouchDelay={0}>
             <rect height="34" width={`${0.6 * (90 / lastDays)}%`} x={5 * (90 / lastDays) * i} y="0" fill={upPresentage !== undefined ? getGradient(upPresentage) : '#B3BAC5'} kvMonitor-html="true"></rect>
           </Tooltip>
         )}
