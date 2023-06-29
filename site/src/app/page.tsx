@@ -4,7 +4,8 @@ import type { KvMonitors } from 'cf-status-page-types'
 import { notFound } from 'next/navigation.js';
 import Monitors from './Monitors';
 
-export const revalidate = 120;
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 const getKvMonitors = async (): Promise<KvMonitors | null> => {
   if (!process.env.KV_STATUS_PAGE)
