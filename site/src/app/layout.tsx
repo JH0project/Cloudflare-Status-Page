@@ -1,12 +1,13 @@
 import { Roboto } from 'next/font/google'
 import DefaultRootLayout from './RootLayout'
 import Script from 'next/script.js'
+import config from '../../../config.json'
 
 const inter = Roboto({ weight: ['300', '400', '500', '700'], display: 'swap', subsets: ['cyrillic', 'cyrillic-ext', 'greek', 'greek-ext', 'latin', 'latin-ext', 'vietnamese'] })
 
 export const metadata = {
-  title: 'JH0project Status',
-  description: 'A status page of JH0project, showing historical status and performane information.',
+  title: config.settings.title,
+  description: config.settings.description,
 }
 
 export default function RootLayout({

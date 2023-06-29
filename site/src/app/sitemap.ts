@@ -1,9 +1,8 @@
 import { MetadataRoute } from "next";
 import fs from "fs/promises";
+import config from '../../../config.json'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://status.jh0project.com"
-
   const dirs: string[] = [''];
   const staticPages: string[] = [];
 
@@ -31,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (file.name != 'page.tsx' && file.name != 'route.ts' && !file.name.endsWith('.mdx'))
           return
 
-        staticPages.push(`${baseUrl}${dir}${(`/${file.name}`)}`
+        staticPages.push(`${config.settings.url}${dir}${(`/${file.name}`)}`
           .replace(/\/\[[A-z]+\]/, '')
           .replace(/\/\([A-z]+\)/, '')
           .replace('.tsx', '')

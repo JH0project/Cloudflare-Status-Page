@@ -49,16 +49,12 @@ export default function UptimeGraph({ kvMonitor, monitorName }: { kvMonitor: KvM
   })
   return (
     <>
-      <Typography variant='h6' component='h2' style={{ color: kvMonitor.operational ? '#2ecc71' : '' }}>
-        {monitorName}
-        <span style={{ float: 'right', color: kvMonitor.operational ? '#3BA55C' : '' }}>{kvMonitor.operational ? 'Operational' : 'Outage'}</span>
-      </Typography>
       <svg preserveAspectRatio="none" height="34" viewBox="0 0 448 34" style={{ width: '100%' }}>
         {lastX0Days.map(({ day, upPresentage }, i) =>
           <Tooltip title={<div style={{ textAlign: 'center' }}>
             {day}
             <br />
-            {upPresentage !== undefined ? upPresentage * 100 + ' %' : 'No Data'}
+            {upPresentage !== undefined ? `${upPresentage * 100} % ${kvMonitor.checks[day].incidents.length} incident(s)` : 'No Data'}
             <br />
             <div style={{ width: '10vw', height: '10vh' }}>
               <ResponseGraph data={Object.keys(kvMonitor.checks).map((day) => kvMonitor.checks[day].res).flat()} day={lastDays - i} local={false} />
