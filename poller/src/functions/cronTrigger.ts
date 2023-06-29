@@ -1,4 +1,4 @@
-import config from '../config.json'
+import config from '../../../config.json'
 import type { ScheduledEvent } from '@cloudflare/workers-types'
 
 import {

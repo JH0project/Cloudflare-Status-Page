@@ -16,7 +16,7 @@
   },
   "monitors": [
     {
-      "id": "main",
+      "id": "Main Website",
       "name": "JH0project Main Website",
       "description": "",
       "url": "https://www.jh0project.com",
@@ -25,7 +25,7 @@
       "followRedirect": false
     },
     {
-      "id": "dn42",
+      "id": "DN42 Website",
       "name": "JH0project DN42 Website",
       "description": "",
       "url": "https://dn42.jh0project.com",
