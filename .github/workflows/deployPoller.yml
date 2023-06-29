@@ -32,11 +32,6 @@ jobs:
                       echo "kv_namespaces = [{binding=\"KV_STATUS_PAGE\", id=\"${KV_NAMESPACE_ID}\"}]" >> wrangler.toml
                   postCommands: |
                       yarn kv-gc
-                  secrets: |
-                      SECRET_SLACK_WEBHOOK_URL
-                      SECRET_TELEGRAM_API_TOKEN
-                      SECRET_TELEGRAM_CHAT_ID
-                      SECRET_DISCORD_WEBHOOK_URL
                   environment: production
               env:
                   CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
