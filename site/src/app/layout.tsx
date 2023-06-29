@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} style={{ minHeight: '100vh', color: '#FFF', backgroundColor: "#fff" }}>
+      <body className={inter.className} style={{ minHeight: '100vh' }}>
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-21C3KNWYDN" strategy='afterInteractive' />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

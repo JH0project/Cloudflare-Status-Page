@@ -28,5 +28,10 @@ export interface KvMonitor {
 }
 
 export interface KvMonitors {
-  [index: string]: KvMonitor
+  lastCheck: number
+  allOperational: boolean
+  monitors: {
+    [index: string]: KvMonitor
+  }
 }
+
