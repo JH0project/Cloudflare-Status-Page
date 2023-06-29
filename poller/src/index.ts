@@ -1,4 +1,5 @@
-import { processCronTrigger } from './src/functions/cronTrigger'
+import { processCronTrigger } from './functions/cronTrigger.js'
+import { addEventListener } from '@cloudflare/workers-types'
 
 /**
  * The DEBUG flag will do two things that help during development:
@@ -7,6 +8,7 @@ import { processCronTrigger } from './src/functions/cronTrigger'
  * 2. we will return an error message on exception in your Response rather
  *    than the default 404.html page.
  */
+//@ts-ignore
 const DEBUG = false
 
 // addEventListener('fetch', (event) => {

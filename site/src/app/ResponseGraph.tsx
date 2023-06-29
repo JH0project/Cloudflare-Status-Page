@@ -1,5 +1,6 @@
 "use client"
 
+import { Paper } from '@mui/material';
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -15,7 +16,7 @@ export default function ResponseGraph({ data, day = 1, local = true }: { data: a
         <CartesianGrid />
         <XAxis mirror dataKey={(data) => new Date(data.t)} scale='time' axisLine={false} tickLine={false} tick={false} tickMargin={0} />
         <YAxis mirror scale="pow" axisLine={false} tickLine={false} tick={false} tickMargin={0} />
-        <Tooltip labelStyle={{ color: '#000' }} />
+        <Tooltip labelStyle={{ color: '#000' }} labelFormatter={(label, _payload) => new Date(label).toISOString().replace('T', ' ').split('.')[0]} />
         {/* <Line type="monotone" dot={false} dataKey="ms" stroke="#82ca9d" /> */}
         <Line type="monotone" dot={false} dataKey={(d) => {
           if (!d.ms) return undefined

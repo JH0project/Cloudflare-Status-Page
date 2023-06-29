@@ -1,4 +1,5 @@
-import config from '../../config.json'
+import config from '../config.json'
+import type { ScheduledEvent } from '@cloudflare/workers-types'
 
 import {
   getCheckLocation,
@@ -10,7 +11,7 @@ function getDate() {
   return new Date().toISOString().split('T')[0]
 }
 
-export async function processCronTrigger(event) {
+export async function processCronTrigger(_event: ScheduledEvent) {
   // Get Worker PoP and save it to monitorsStateMetadata
   const checkLocation = await getCheckLocation()
   const checkDay = getDate()
@@ -28,10 +29,11 @@ export async function processCronTrigger(event) {
     console.log(`Checking ${monitor.name} ...`)
 
     // Fetch the monitors URL
-    const init = {
+    const init: Parameters<typeof fetch>[1] = {
       method: monitor.method || 'GET',
       redirect: monitor.followRedirect ? 'follow' : 'manual',
       headers: {
+        //@ts-expect-error
         'User-Agent': config.settings.user_agent || 'cf-workers-status-poller',
       },
     }
@@ -39,7 +41,6 @@ export async function processCronTrigger(event) {
     // Create default monitor state if does not exist yet
     if (typeof monitorsState[monitor.id] === 'undefined') {
       monitorsState[monitor.id] = {
-        lastIncident: undefined,
         operational: true,
         incidents: [],
         checks: {},
@@ -110,7 +111,7 @@ export async function processCronTrigger(event) {
 
       // back online
       if (monitorStatusChanged) {
-        monitorsState[monitor.id].incidents.at(-1) = now;
+        monitorsState[monitor.id].incidents.at(-1)!.end = now;
       }
     }
 

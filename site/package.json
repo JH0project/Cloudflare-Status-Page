@@ -1,5 +1,5 @@
 {
-  "name": "cf-workers-status-page",
+  "name": "cf-status-page-site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages@1",
-    "pages:deploy": "npm run pages:build && wrangler pages publish .vercel/output/static",
-    "pages:watch": "npx @cloudflare/next-on-pages@1 --watch",
-    "pages:dev": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
+    "pages:build": "yarn dlx @cloudflare/next-on-pages@1",
+    "pages:deploy": "pages:build && wrangler pages publish .vercel/output/static",
+    "pages:watch": "yarn dlx @cloudflare/next-on-pages@1 --watch",
+    "pages:dev": "yarn dlx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.1.0",
     "@cloudflare/workers-types": "^4.20230518.0",
+    "cf-status-page-types": "*",
     "vercel": "^30.2.3"
   }
 }

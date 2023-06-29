@@ -1,0 +1,42 @@
+name: Deploy Poller
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "poller/**"
+            - ".github/workflows/deploy.yml"
+    repository_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+            - run: yarn install
+            - run: yarn build
+              working-directory: poller
+            - name: Publish
+              uses: cloudflare/wrangler-action@2.0.0
+              with:
+                  workingDirectory: poller
+                  apiToken: ${{ secrets.CF_API_TOKEN }}
+                  preCommands: |
+                      wrangler kv:namespace create KV_STATUS_PAGE || true
+                      apt-get update && apt-get install -y jq
+                      export KV_NAMESPACE_ID=$(wrangler kv:namespace list | jq -c 'map(select(.title | contains("KV_STATUS_PAGE")))' | jq -r ".[0].id")
+                      echo "[env.production]" >> wrangler.toml
+                      echo "kv_namespaces = [{binding=\"KV_STATUS_PAGE\", id=\"${KV_NAMESPACE_ID}\"}]" >> wrangler.toml
+                  postCommands: |
+                      yarn kv-gc
+                  secrets: |
+                      SECRET_SLACK_WEBHOOK_URL
+                      SECRET_TELEGRAM_API_TOKEN
+                      SECRET_TELEGRAM_CHAT_ID
+                      SECRET_DISCORD_WEBHOOK_URL
+                  environment: production
+              env:
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
