@@ -1394,9 +1394,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/next-on-pages@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "@cloudflare/next-on-pages@npm:1.1.1"
+"@cloudflare/next-on-pages@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@cloudflare/next-on-pages@npm:1.2.0"
   dependencies:
     acorn: ^8.8.0
     ast-types: ^0.14.2
@@ -1406,7 +1406,7 @@ __metadata:
     esbuild: ^0.15.3
     js-yaml: ^4.1.0
     pcre-to-regexp: ^1.1.0
-    semver: ^7.5.1
+    semver: ^7.5.2
     zod: ^3.21.4
     zodcli: ^0.0.4
   peerDependencies:
@@ -1414,7 +1414,7 @@ __metadata:
     wrangler: ^3.0.0
   bin:
     next-on-pages: bin/index.js
-  checksum: bc4443a32cb03fcfc92ecc752d6da5c9b5a2d6cad4012c0c2fc26fcb484ac41d0aeb0442b09f2a41b142944d7d6870c2b0ef11bc0aa6f5fef52aebcdbe4e47d9
+  checksum: 19719ccdd51218c631838ed09d8d156cfdc689b6a8a27256850d0d59d4fbd987d4f4f5d60e29a46c98004fe54ec252861ac693db9e801d2cc25c3f776fb1229b
   languageName: node
   linkType: hard
 
@@ -4210,7 +4210,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cf-status-page-site@workspace:site"
   dependencies:
-    "@cloudflare/next-on-pages": ^1.1.0
+    "@cloudflare/next-on-pages": ^1.2.0
     "@cloudflare/workers-types": ^4.20230518.0
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
@@ -10701,7 +10701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.1, semver@npm:^7.5.3":
+"semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.2, semver@npm:^7.5.3":
   version: 7.5.3
   resolution: "semver@npm:7.5.3"
   dependencies:
