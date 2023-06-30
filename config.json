@@ -2,7 +2,7 @@
   "settings": {
     "title": "JH0project Status",
     "url": "https://status.jh0project.com",
-    "description": "The status page of JH0project, showing historical status and performane information.",
+    "description": "The status page of JH0project (JHOproject/JHo project), showing historical status and performane information.",
     "logo": "logo-192x192.png",
     "collectResponseTimes": true,
     "allmonitorsOperational": "All Systems Operational",
