@@ -39,7 +39,7 @@ export default function UptimeGraph({ kvMonitor, monitorName }: { kvMonitor: KvM
 
   let lastX0Uptime = 0;
   const lastX0Days = new Array(lastDays).fill(1).map((_, i) => {
-    const day = new Date(Date.now() - 86400000 * lastDays - 1 + 86400000 * i).toISOString().split('T')[0]
+    const day = new Date(Date.now() - 86400000 * (lastDays - 1) + 86400000 * i).toISOString().split('T')[0]
     const upPresentage = getUpPresentage(kvMonitor, day)
     lastX0Uptime += (upPresentage ?? 1) / lastDays
     return {
