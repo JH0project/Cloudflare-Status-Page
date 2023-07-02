@@ -28,6 +28,8 @@ export async function processCronTrigger(_event: ScheduledEvent) {
     }
   }
 
+  monitorsState.allOperational = true
+
   for (const monitor of config.monitors) {
 
     console.log(`Checking ${monitor.name} ...`)
