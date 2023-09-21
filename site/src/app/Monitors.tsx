@@ -9,6 +9,7 @@ import NextLink from 'next/link';
 import OverallResponseGraph from './OverallResponseGraph';
 import AllStatus from './AllStatus';
 
+//@ts-ignore
 const Link = (args: Parameters<typeof MuiLink>[0]) => <MuiLink component={NextLink} {...args} />
 
 export default function Monitors({ kvMonitors }: { kvMonitors: KvMonitors }) {
