@@ -1,5 +1,6 @@
 import config from '../../../config.json'
 import type { ScheduledEvent } from '@cloudflare/workers-types'
+import { MonitorDay, MonthSummery } from 'cf-status-page-types'
 
 import {
   getCheckLocation,
@@ -7,28 +8,49 @@ import {
   setKVMonitors,
 } from './helpers'
 
-function getDate() {
-  return new Date().toISOString().split('T')[0]
+function getDate(time: number) {
+  return new Date(time).toISOString().split('T')[0]
 }
 
 export async function processCronTrigger(_event: ScheduledEvent) {
-  // Get Worker PoP and save it to monitorsStateMetadata
+  // Get Worker PoP and save it to monitorDayMetadata
   const checkLocation = await getCheckLocation()
-  const checkDay = getDate()
   const now = Date.now()
+  const checkDay = getDate(now)
 
   // Get monitors state from KV
-  let monitorsState = await getKVMonitors()
+  let monitorDay: MonitorDay = await getKVMonitors(checkDay)
   // Create empty state objects if not exists in KV storage yet
-  if (!monitorsState) {
-    monitorsState = {
+  if (!monitorDay) {
+    const lastDay = getDate(now - 86400000)
+    const lastMonitorDay: MonitorDay = await getKVMonitors(lastDay)
+    if (lastMonitorDay) {
+      const month = lastDay.slice(0, 7)
+      let monthSummery: MonthSummery = await getKVMonitors(month)
+      if (!monthSummery)
+        monthSummery = {}
+      monthSummery[lastDay] = lastMonitorDay.checks.summery
+      await setKVMonitors(month, monthSummery)
+    }
+
+    monitorDay = {
       lastCheck: now,
-      allOperational: true,
-      monitors: {}
+      operational: lastMonitorDay ? lastMonitorDay.operational : {},
+      checks: {
+        // incidents: {},
+        summery: {},
+        res: [],
+      }
     }
   }
 
-  monitorsState.allOperational = true
+  const res: {
+    t: number
+    l: string
+    ms: {
+      [index: string]: number | null
+    }
+  } = { t: now, l: checkLocation, ms: {} }
 
   for (const monitor of config.monitors) {
 
@@ -44,15 +66,6 @@ export async function processCronTrigger(_event: ScheduledEvent) {
       },
     }
 
-    // Create default monitor state if does not exist yet
-    if (typeof monitorsState.monitors[monitor.id] === 'undefined') {
-      monitorsState.monitors[monitor.id] = {
-        operational: true,
-        incidents: [],
-        checks: {},
-      }
-    }
-
     // Perform a check and measure time
     const requestStartTime = performance.now()
     const checkResponse = await fetch(monitor.url, init)
@@ -60,81 +73,51 @@ export async function processCronTrigger(_event: ScheduledEvent) {
 
     // Determine whether operational and status changed
     const monitorOperational = checkResponse.status === (monitor.expectStatus || 200)
-    const monitorStatusChanged = monitorsState.monitors[monitor.id].operational !== monitorOperational
-
-    // make sure checkDay exists in checks in cases when needed
-    if (
-      (config.settings.collectResponseTimes || !monitorOperational) &&
-      !monitorsState.monitors[monitor.id].checks.hasOwnProperty(checkDay)
-    ) {
-      monitorsState.monitors[monitor.id].checks[checkDay] = {
-        incidents: [],
-        summery: {},
-        res: [],
-      }
-      if (!monitorsState.monitors[monitor.id].operational) {
-        monitorsState.monitors[monitor.id].checks[checkDay].incidents.push(monitorsState.monitors[monitor.id].incidents.length - 1)
-      }
-    }
+    // const monitorStatusChanged = monitorDay.operational[monitor.id] ? monitorDay.operational[monitor.id] !== monitorOperational : false
 
     // Save monitor's last check response status
-    monitorsState.monitors[monitor.id].operational = monitorOperational;
-    if (!monitorOperational) monitorsState.allOperational = false
-
+    monitorDay.operational[monitor.id] = monitorOperational;
 
     if (config.settings.collectResponseTimes && monitorOperational) {
       // make sure location exists in current checkDay
-      if (
-        !monitorsState.monitors[monitor.id].checks[checkDay].summery.hasOwnProperty(
-          checkLocation,
-        )
-      ) {
-        monitorsState.monitors[monitor.id].checks[checkDay].summery[
-          checkLocation
-        ] = {
+      if (!monitorDay.checks.summery[checkLocation])
+        monitorDay.checks.summery[checkLocation] = {}
+      if (!monitorDay.checks.summery[checkLocation][monitor.id])
+        monitorDay.checks.summery[checkLocation][monitor.id] = {
           n: 0,
           ms: 0,
           a: 0,
         }
-      }
 
       // increment number of checks and sum of ms
-      const no = ++monitorsState.monitors[monitor.id].checks[checkDay].summery[
-        checkLocation
-      ].n
-      const ms = (monitorsState.monitors[monitor.id].checks[checkDay].summery[
-        checkLocation
-      ].ms += requestTime)
+      const no = ++monitorDay.checks.summery[checkLocation][monitor.id].n
+      const ms = monitorDay.checks.summery[checkLocation][monitor.id].ms += requestTime
 
       // save new average ms
-      monitorsState.monitors[monitor.id].checks[checkDay].summery[
-        checkLocation
-      ].a = Math.round(ms / no)
+      monitorDay.checks.summery[checkLocation][monitor.id].a = Math.round(ms / no)
 
-      monitorsState.monitors[monitor.id].checks[checkDay].res.push({
-        t: now,
-        loc: checkLocation,
-        ms: requestTime
-      })
+
+      res.ms[monitor.id] = monitorOperational ? requestTime : null
 
       // back online
-      if (monitorStatusChanged) {
-        monitorsState.monitors[monitor.id].incidents.at(-1)!.end = now;
-      }
+      // if (monitorStatusChanged) {
+      //   monitorDay.monitors[monitor.id].incidents.at(-1)!.end = now;
+      // }
     }
 
     // go dark
-    if (!monitorOperational && monitorStatusChanged) {
-      monitorsState.monitors[monitor.id].incidents.push({ start: now, status: checkResponse.status, statusText: checkResponse.statusText })
-      const incidentNumber = monitorsState.monitors[monitor.id].incidents.length - 1
-      monitorsState.monitors[monitor.id].checks[checkDay].incidents.push(incidentNumber)
-    }
+    // if (!monitorOperational && monitorStatusChanged) {
+    //   monitorDay.monitors[monitor.id].incidents.push({ start: now, status: checkResponse.status, statusText: checkResponse.statusText })
+    //   const incidentNumber = monitorDay.monitors[monitor.id].incidents.length - 1
+    //   monitorDay.monitors[monitor.id].checks[checkDay].incidents.push(incidentNumber)
+    // }
   }
 
-  monitorsState.lastCheck = now
+  monitorDay.checks.res.push(res)
+  monitorDay.lastCheck = now
 
-  // Save monitorsState to KV storage
-  await setKVMonitors(monitorsState)
+  // Save monitorDay to KV storage
+  await setKVMonitors(checkDay, monitorDay)
 
   return new Response('OK')
 }

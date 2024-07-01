@@ -1,16 +1,12 @@
-import type { KvMonitors } from 'cf-status-page-types'
-
-const kvDataKey = 'monitors_data_v1_1'
-
-export async function getKVMonitors(): Promise<KvMonitors> {
+export async function getKVMonitors(key: string): Promise<any> {
   // trying both to see performance difference
   //@ts-ignore
-  return (KV_STATUS_PAGE as KVNamespace).get(kvDataKey, 'json')
+  return (KV_STATUS_PAGE as KVNamespace).get(key, 'json')
   //return JSON.parse(await KV_STATUS_PAGE.get(kvDataKey, 'text'))
 }
 
-export async function setKVMonitors(data: any) {
-  return setKV(kvDataKey, JSON.stringify(data))
+export async function setKVMonitors(key: string, data: any) {
+  return setKV(key, JSON.stringify(data))
 }
 
 export async function setKV(key: string, value: string, metadata?: any | null, expirationTtl?: number) {
