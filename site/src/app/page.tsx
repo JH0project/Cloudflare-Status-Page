@@ -13,7 +13,7 @@ export const runtime = 'edge'
 
 const getKvMonitors = async (): Promise<any | null> => {
   //if (!process.env.KV_STATUS_PAGE)
-  return fetch(`${config.settings.url}/api/status`).then((res) => res.status === 200 ? res.json() : null);
+  return fetch(`${config.settings.url}/api/status`).then((res) => res.status === 200 ? res.text() : null);
   //const { KV_STATUS_PAGE } = (process.env as unknown as { KV_STATUS_PAGE: KVNamespace });
   //return KV_STATUS_PAGE.get("monitors_data_v1_1", { type: 'json' });
 }
@@ -22,7 +22,7 @@ export default function Home() {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    getKvMonitors().then((res) => { setData(res) })
+    getKvMonitors().then((res) => { setData(JSON.parse(res)) })
   }, [])
 
   return (
