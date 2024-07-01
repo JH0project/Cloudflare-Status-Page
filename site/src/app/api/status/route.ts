@@ -9,6 +9,6 @@ export const runtime = 'edge'
 
 export async function GET(request: NextRequest) {
   const { KV_STATUS_PAGE } = (process.env as unknown as { KV_STATUS_PAGE: KVNamespace });
-  const data = await KV_STATUS_PAGE.get("monitors_data_v1_1", { type: 'json' });
+  const data = await KV_STATUS_PAGE.get("monitors_data_v1_1", { type: 'text' });
   return NextResponse.json(data)
 }
