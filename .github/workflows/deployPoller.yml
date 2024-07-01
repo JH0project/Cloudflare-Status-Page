@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v4
+        with:
+          node-version: 18
       - run: yarn install
       - run: yarn build
         working-directory: poller
@@ -35,3 +37,4 @@ jobs:
           environment: production
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          YARN_IGNORE_NODE: 1
