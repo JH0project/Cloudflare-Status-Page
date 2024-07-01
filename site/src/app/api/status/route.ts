@@ -10,5 +10,12 @@ export const runtime = 'edge'
 export async function GET(request: NextRequest) {
   const { KV_STATUS_PAGE } = (process.env as unknown as { KV_STATUS_PAGE: KVNamespace });
   const data = await KV_STATUS_PAGE.get("monitors_data_v1_1", { type: 'text' });
-  return NextResponse.json(data)
+  return new NextResponse(data, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  })
 }
