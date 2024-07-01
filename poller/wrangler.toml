@@ -4,4 +4,4 @@ compatibility_date = "2021-07-23"
 main = "./dist/index.js"
 
 [triggers]
-crons = ["*/2 * * * *"]
+crons = ["*/3 * * * *"]
