@@ -62,25 +62,12 @@ export interface Checks {
   }[]
 }
 
-export interface MonitorDay {
+export interface MonitorMonth {
   lastCheck: number,
   operational: {
     [index: string]: boolean
   },
-  checks: Checks
-}
-
-export interface MonthSummery {
-  // Date
-  [index: string]: {
-    // Location
-    [index: string]: {
-      // Monitor
-      [index: string]: {
-        n: number
-        ms: number
-        a: number
-      }
-    }
-  },
+  checks: {
+    [index: string]: Checks
+  }
 }
