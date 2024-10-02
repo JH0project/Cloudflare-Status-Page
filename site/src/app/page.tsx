@@ -5,7 +5,7 @@ import type { MonitorMonth } from 'cf-status-page-types'
 import config from '../../../config.json'
 import { useEffect, useState } from 'react';
 import { Container, Typography, Paper, Divider, Box } from '@mui/material';
-import Link from 'next/link';
+import Link from './Link';
 import AllStatus from './AllStatus';
 import OverallResponseGraph from './OverallResponseGraph';
 import UptimeGraph from './UptimeGraph';
