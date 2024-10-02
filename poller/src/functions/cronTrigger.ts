@@ -38,7 +38,7 @@ export async function processCronTrigger(_event: ScheduledEvent) {
     monitorMonth.checks[checkDay] = {
       summery: {},
       res: [],
-      // incidents: [],
+      incidents: {},
     }
   }
 
@@ -94,14 +94,13 @@ export async function processCronTrigger(_event: ScheduledEvent) {
       // save new average ms
       monitorMonth.checks[checkDay].summery[checkLocation][monitor.id].a = Math.round(ms / no)
 
-
-      res.ms[monitor.id] = monitorOperational ? requestTime : null
-
       // back online
       // if (monitorStatusChanged) {
       //   monitorMonth.monitors[monitor.id].incidents.at(-1)!.end = now;
       // }
     }
+
+    res.ms[monitor.id] = monitorOperational ? requestTime : null
 
     // go dark
     // if (!monitorOperational && monitorStatusChanged) {
