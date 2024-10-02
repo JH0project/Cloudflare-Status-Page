@@ -1,10 +1,7 @@
 "use client"
 
 //import 'server-only'
-import type { KVNamespace } from '@cloudflare/workers-types'
-import type { MonitorMonth, MonthSummery } from 'cf-status-page-types'
-import { notFound } from 'next/navigation';
-import Monitors from './Monitors';
+import type { MonitorMonth } from 'cf-status-page-types'
 import config from '../../../config.json'
 import { useEffect, useState } from 'react';
 import { Container, Typography, Paper, Divider, Box } from '@mui/material';
@@ -47,9 +44,9 @@ export default function Home() {
         operational: res.lastCheck > oldData.lastCheck ? res.operational : oldData.operational,
       }))
     }).catch(() => { });
+
     const lastMonth = new Date()
     lastMonth.setMonth(lastMonth.getMonth() - 1)
-
     getKvMonitors(getYearMonth(lastMonth)).then((res) => {
       setData(oldData => ({
         checks: { ...oldData.checks, ...res.checks },
@@ -57,9 +54,9 @@ export default function Home() {
         operational: res.lastCheck > oldData.lastCheck ? res.operational : oldData.operational,
       }))
     }).catch(() => { });
+
     const last2Month = new Date()
     last2Month.setMonth(last2Month.getMonth() - 2)
-
     getKvMonitors(getYearMonth(last2Month)).then((res) => {
       setData(oldData => ({
         checks: { ...oldData.checks, ...res.checks },
@@ -79,7 +76,6 @@ export default function Home() {
       <Paper elevation={5} style={{ padding: '5vh 0', margin: '5vh 0' }}>
         <Container>
           {Object.keys(data.operational).map((monitorName, i) => {
-            console.log(data)
             return (<Box key={i}>
               {i !== 0 && <Divider style={{ margin: '2.5vh 0' }} />}
               <Typography variant='h6' component='h2' style={{ color: data.operational[monitorName] ? '#2ecc71' : '' }}>
@@ -88,7 +84,7 @@ export default function Home() {
                 </Link>
                 <span style={{ float: 'right', color: data.operational[monitorName] ? '#3BA55C' : '' }}>{data.operational[monitorName] ? 'Operational' : 'Outage'}</span>
               </Typography >
-              {/* <UptimeGraph kvMonitor={kvMonitor} monitorName={monitorName} key={monitorName} /> */}
+              <UptimeGraph checks={data.checks} monitorName={monitorName} key={monitorName} />
               <div style={{ height: '20vh', width: '100%' }}>
                 <OverallResponseGraph checks={data.checks} monitorName={monitorName} />
               </div>

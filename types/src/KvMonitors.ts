@@ -36,14 +36,14 @@ export interface KvMonitors {
 }
 
 export interface Checks {
-  // incidents: {
-  //   [index: string]: {
-  //     start: number
-  //     status: number
-  //     statusText: string
-  //     end?: number
-  //   }[]
-  // },
+  incidents: {
+    [index: string]: {
+      start: number
+      status: number
+      statusText: string
+      end?: number
+    }[]
+  },
   summery: {
     [index: string]: {
       [index: string]: {
