@@ -3,14 +3,19 @@
 //import 'server-only'
 import type { MonitorMonth } from 'cf-status-page-types'
 import config from '../../../config.json'
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import Link from '@/components/Link';
+import AllStatusWithData, { AllStatus } from '@/components/AllStatus';
+import OverallResponseGraph from '@/components/OverallResponseGraph';
+import UptimeGraph from '@/components/UptimeGraph';
 import { useEffect, useState } from 'react';
-import { Container, Typography, Paper, Divider, Box } from '@mui/material';
-import Link from './Link';
-import AllStatus from './AllStatus';
-import OverallResponseGraph from './OverallResponseGraph';
-import UptimeGraph from './UptimeGraph';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic"
+export const fetchCache = "force-no-store"
 export const runtime = 'edge'
 
 const getKvMonitors = async (key: string): Promise<MonitorMonth> => {
@@ -67,20 +72,16 @@ export default function Home() {
   }, [])
 
   return (
-
-    <Container maxWidth='md' style={{ padding: '0 0 5vh 0' }}>
-      <Typography variant='h3' component='h1' style={{ margin: '2.5vh 1vw' }}>
-        {config.settings.title}
-      </Typography >
-      <AllStatus data={data} />
+    <>
+      <AllStatusWithData operational={data.operational} lastCheck={data.lastCheck} defaultNow={Date.now()} />
       <Paper elevation={5} style={{ padding: '5vh 0', margin: '5vh 0' }}>
         <Container>
-          {Object.keys(data.operational).map((monitorName, i) => {
-            return (<Box key={i}>
+          {config.monitors.map(({ id: monitorName, name, url }, i) =>
+            <Box key={i}>
               {i !== 0 && <Divider style={{ margin: '2.5vh 0' }} />}
               <Typography variant='h6' component='h2' style={{ color: data.operational[monitorName] ? '#2ecc71' : '' }}>
-                <Link style={{ color: 'inherit' }} underline='hover' href={config.monitors[i].url}>
-                  {config.monitors[i].name}
+                <Link style={{ color: 'inherit' }} underline='hover' href={url}>
+                  {name}
                 </Link>
                 <span style={{ float: 'right', color: data.operational[monitorName] ? '#3BA55C' : '' }}>{data.operational[monitorName] ? 'Operational' : 'Outage'}</span>
               </Typography >
@@ -88,22 +89,10 @@ export default function Home() {
               <div style={{ height: '20vh', width: '100%' }}>
                 <OverallResponseGraph checks={data.checks} monitorName={monitorName} />
               </div>
-            </Box>)
-          })}
+            </Box>
+          )}
         </Container>
       </Paper >
-      <div>
-        <Typography>
-          <Link href='https://github.com/JH0project/Cloudflare-Status-Page'>
-            Cloudflare Status Page
-          </Link>
-          {' by '}
-          <Link href='https://github.com/H01001000'>
-            H01001000
-          </Link>
-        </Typography>
-        <Typography>{'Powered by '}<Link href='https://www.cloudflare.com/'>Cloudflare</Link>{' and '}<Link href='https://nextjs.org/'>Next.js</Link></Typography>
-      </div>
-    </Container >
+    </>
   )
 }

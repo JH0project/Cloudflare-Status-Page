@@ -26,7 +26,6 @@ export default function ResponseGraph({ monitorName, checks, day = 90 }: {
     processedData.push(item)
   }
 
-
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
@@ -40,7 +39,7 @@ export default function ResponseGraph({ monitorName, checks, day = 90 }: {
         <Tooltip labelStyle={{ color: '#000' }} labelFormatter={(label, _payload) => new Date(label).toISOString().slice(0, 10)} />
         {/* <Line type="monotone" dot={false} dataKey="ms" stroke="#82ca9d" /> */}
         {locations.map((location) =>
-          <Line type="monotone" connectNulls dot={false} dataKey={(d) => d.summery?.[location]?.[monitorName].a ?? null} stroke="#82ca9d" name={location} unit=' ms' key={location} />
+          <Line type="monotone" connectNulls dot={false} dataKey={(d) => d.summery?.[location]?.[monitorName]?.a ?? null} stroke="#82ca9d" name={location} unit=' ms' key={location} />
         )}
       </LineChart>
     </ResponsiveContainer>

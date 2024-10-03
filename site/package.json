@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,24 +13,27 @@
     "pages:dev": "yarn dlx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/material": "^5.16.4",
-    "@types/node": "20.14.11",
-    "@types/react": "18.3.3",
+    "@mui/material": "^6.1.2",
+    "@mui/material-nextjs": "^6.1.2",
+    "@next/third-parties": "^14.2.14",
+    "@types/node": "20.16.10",
+    "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
-    "eslint": "8.57.0",
-    "eslint-config-next": "13.5.6",
+    "eslint": "8.57.1",
+    "eslint-config-next": "13.5.7",
     "next": "^14.2.14",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "recharts": "^2.12.7",
+    "recharts": "^2.13.0-alpha.5",
     "server-only": "^0.0.1",
-    "typescript": "5.5.3"
+    "typescript": "5.6.2"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.12.1",
-    "@cloudflare/workers-types": "^4.20240718.0",
+    "@cloudflare/next-on-pages": "^1.13.3",
+    "@cloudflare/workers-types": "^4.20240925.0",
     "cf-status-page-types": "*",
     "vercel": "^35.1.0"
   }

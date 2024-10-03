@@ -11,8 +11,5 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "yarn@4.3.1",
-  "resolutions": {
-    "next": "13.4.6"
-  }
+  "packageManager": "yarn@4.3.1"
 }

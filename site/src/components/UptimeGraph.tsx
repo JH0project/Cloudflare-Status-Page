@@ -2,7 +2,7 @@
 
 import { Container, Divider, Paper, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
-import ResponseGraph from './ResponseGraph';
+import ResponseGraph from '@/components/ResponseGraph';
 import type { Checks, KvMonitor } from 'cf-status-page-types';
 
 const getGradient = (UpPresentage: number) => {
@@ -68,7 +68,7 @@ export default function UptimeGraph({ monitorName, checks, day = 90 }: {
               <ResponseGraph data={Object.keys(kvMonitor.checks).map((day) => kvMonitor.checks[day].res).flat()} day={lastDays - i} local={false} />
             </div> */}
           </div>} arrow key={i} enterTouchDelay={0}>
-            <rect height="34" width={`${0.6 * (90 / lastDays)}%`} x={5 * (90 / lastDays) * i} y="0" fill={upPresentage !== undefined ? getGradient(upPresentage) : '#B3BAC5'} kvMonitor-html="true"></rect>
+            <rect height="34" width={`${0.6 * (90 / lastDays)}%`} x={5 * (90 / lastDays) * i} y="0" fill={upPresentage !== undefined ? getGradient(upPresentage) : '#B3BAC5'}></rect>
           </Tooltip>
         )}
       </svg>

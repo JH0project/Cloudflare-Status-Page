@@ -10,11 +10,11 @@
     "kv-gc": "node ./src/cli/gcMonitors.js"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240718.0",
+    "@cloudflare/workers-types": "^4.20240925.0",
     "@swc/cli": "^0.1.65",
     "@swc/core": "^1.7.0",
     "cf-status-page-types": "*",
-    "eslint": "^8.57.0",
-    "typescript": "^5.5.3"
+    "eslint": "^8.57.1",
+    "typescript": "^5.6.2"
   }
 }
