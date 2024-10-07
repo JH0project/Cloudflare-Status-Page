@@ -40,6 +40,7 @@ export default function Home() {
     lastCheck: 0,
     operational: {},
   })
+  const [_dataLoaded, setDataLoaded] = useState([false, false, false])
 
   useEffect(() => {
     getKvMonitors(getYearMonth(new Date())).then((res) => {
@@ -48,6 +49,7 @@ export default function Home() {
         lastCheck: res.lastCheck > oldData.lastCheck ? res.lastCheck : oldData.lastCheck,
         operational: res.lastCheck > oldData.lastCheck ? res.operational : oldData.operational,
       }))
+      setDataLoaded(oldData => [true, oldData[1], oldData[2]])
     }).catch(() => { });
 
     const lastMonth = new Date()
@@ -58,6 +60,7 @@ export default function Home() {
         lastCheck: res.lastCheck > oldData.lastCheck ? res.lastCheck : oldData.lastCheck,
         operational: res.lastCheck > oldData.lastCheck ? res.operational : oldData.operational,
       }))
+      setDataLoaded(oldData => [oldData[0], true, oldData[2]])
     }).catch(() => { });
 
     const last2Month = new Date()
@@ -68,12 +71,15 @@ export default function Home() {
         lastCheck: res.lastCheck > oldData.lastCheck ? res.lastCheck : oldData.lastCheck,
         operational: res.lastCheck > oldData.lastCheck ? res.operational : oldData.operational,
       }))
+      setDataLoaded(oldData => [oldData[0], oldData[1], true])
     }).catch(() => { });
   }, [])
 
   return (
     <>
-      <AllStatusWithData operational={data.operational} lastCheck={data.lastCheck} defaultNow={Date.now()} />
+      {data.lastCheck === 0 ?
+        <AllStatus /> :
+        <AllStatusWithData operational={data.operational} lastCheck={data.lastCheck} defaultNow={Date.now()} />}
       <Paper elevation={5} style={{ padding: '5vh 0', margin: '5vh 0' }}>
         <Container>
           {config.monitors.map(({ id: monitorName, name, url }, i) =>
